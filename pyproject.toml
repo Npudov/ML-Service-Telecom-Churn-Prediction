@@ -32,3 +32,10 @@ module-name = "churn"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["integration: нужна база данных - адрес в DATABASE_URL"]
+
+[tool.ruff]
+line-length = 150
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
