@@ -46,7 +46,7 @@ class Prediction(BaseModel):
     request_id: str
     latency_ms: float
 
-# звгрузка модели один раз и её метаданных из артефакта (до yield запускается при старте сервиса, после yield при остановке сервиса)
+# загрузка модели один раз и её метаданных из артефакта (до yield запускается при старте сервиса, после yield при остановке сервиса)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     bundle = joblib.load(settings.model_path)
