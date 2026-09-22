@@ -1,0 +1,48 @@
+import os
+
+import psycopg
+import pytest
+from psycopg.rows import dict_row
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+pytestmark = [
+    pytest.mark.integration,
+    pytest.mark.skipif(not DATABASE_URL, reason="нужен Postgres: задайте DATABASE_URL")
+]
+
+def test_predicition_is_logged(client, good_row):
+    response = client.post("/v1/predict", json=good_row)
+
+    assert response.status_code == 200
+
+    body = response.json()
+
+
+    with psycopg.connect(DATABASE_URL, row_factory=dict_row) as conn:
+        row = conn.execute(
+            "SELECT model_version, score, features "
+            "FROM predictions WHERE request_id = %s",
+            (body["request_id"],),
+        ).fetchone()
+
+    assert row is not None
+    #assert row[0] == body["model_version"]
+    #assert row[1] == pytest.approx(body["score"])
+    #assert row[2] == good_row["Contract"]
+
+    assert row["model_version"] == body["model_version"]
+    assert row["score"] == pytest.approx(body["score"])
+
+    db_features = row["features"]
+    for key, _value in good_row.items():
+        assert key in db_features
+    if isinstance(_value, float):
+        assert db_features[key] == pytest.approx(_value)
+    else:
+        assert db_features[key] == _value
+
+def test_predicition_is_unvalid_json(client, bad_row):
+    response = client.post("/v1/predict", json=bad_row)
+
+    assert response.status_code == 422
