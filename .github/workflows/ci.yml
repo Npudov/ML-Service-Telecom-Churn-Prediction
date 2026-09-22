@@ -106,14 +106,15 @@ jobs:
 
           sleep 2
 
+          kubectl exec deploy/postgres -- psql -U postgres -d churn \
+            -tc "SELECT count(*) FROM predictions" | grep -q 1
+
+          sleep 2
+
           curl --fail -s -X POST localhost:8080/v1/predict \
             -H "Content-Type: application/json" -d @good.json \
             | python3 -c "import json,sys; r=json.load(sys.stdin); assert 0 <= r['score'] <= 1, r"; echo
           
-          sleep 2
-
-          kubectl exec deploy/postgres -- psql -U postgres -d churn \
-            -tc "SELECT count(*) FROM predictions" | grep -q 1
       
       - name: диагностика
         if: failure()
