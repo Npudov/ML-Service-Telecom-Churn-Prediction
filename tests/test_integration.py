@@ -27,9 +27,12 @@ def test_predicition_is_logged(client, good_row):
         ).fetchone()
 
     assert row is not None
-    assert row[0] == body["model_version"]
-    assert row[1] == pytest.approx(body["score"])
+    #assert row[0] == body["model_version"]
+    #assert row[1] == pytest.approx(body["score"])
     #assert row[2] == good_row["Contract"]
+
+    assert row["model_version"] == body["model_version"]
+    assert row["score"] == pytest.approx(body["score"])
 
     db_features = row["features"]
     for key, _value in good_row.items():
