@@ -1,4 +1,5 @@
 import os
+
 import psycopg
 import pytest
 
@@ -30,12 +31,12 @@ def test_predicition_is_logged(client, good_row):
     #assert row[2] == good_row["Contract"]
 
     db_features = row["features"]
-    for key, value in good_row.items():
+    for key, _value in good_row.items():
         assert key in db_features
-    if isinstance(value, float):
-        assert db_features[key] == pytest.approx(value)
+    if isinstance(_value, float):
+        assert db_features[key] == pytest.approx(_value)
     else:
-        assert db_features[key] == value
+        assert db_features[key] == _value
 
 def test_predicition_is_unvalid_json(client, bad_row):
     response = client.post("/v1/predict", json=bad_row)
