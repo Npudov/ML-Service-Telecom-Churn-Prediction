@@ -31,3 +31,14 @@ spec:
           resources:
             requests: {cpu: 100m, memory: 256Mi}
             limits: {cpu: "1", memory: 512Mi}
+          env:
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: churn-config
+                  key: LOG_LEVEL
+            - name: MODEL_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: churn-config
+                  key: MODEL_PATH
