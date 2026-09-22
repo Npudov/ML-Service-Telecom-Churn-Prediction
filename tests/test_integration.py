@@ -2,6 +2,7 @@ import os
 
 import psycopg
 import pytest
+from psycopg.rows import dict_row
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -18,7 +19,7 @@ def test_predicition_is_logged(client, good_row):
     body = response.json()
 
 
-    with psycopg.connect(DATABASE_URL) as conn:
+    with psycopg.connect(DATABASE_URL, row_factory=dict_row) as conn:
         row = conn.execute(
             "SELECT model_version, score, features "
             "FROM predictions WHERE request_id = %s",
