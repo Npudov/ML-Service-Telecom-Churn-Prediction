@@ -2,7 +2,6 @@ import time
 import uuid
 
 from contextlib import asynccontextmanager
-from wsgiref.util import request_uri
 
 import joblib
 import pandas as pd
