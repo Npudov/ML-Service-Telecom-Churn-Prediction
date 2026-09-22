@@ -32,3 +32,9 @@ def good_row():
         "MonthlyCharges": 89.5,
         "TotalCharges": 445.2,
     }
+
+@pytest.fixture()
+def bad_row():
+    return {
+        "MonthlyCharges": 73.6
+    }

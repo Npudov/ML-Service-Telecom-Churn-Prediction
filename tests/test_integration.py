@@ -10,7 +10,7 @@ pytestmark = [
 ]
 
 def test_predicition_is_logged(client, good_row):
-    response = client.post("/v1/predict", json=good_row).json()
+    response = client.post("/v1/predict", json=good_row)
 
     assert response.status_code == 200
 
@@ -38,6 +38,6 @@ def test_predicition_is_logged(client, good_row):
         assert db_features[key] == value
 
 def test_predicition_is_unvalid_json(client, bad_row):
-    response = client.post("/v1/predict", json=bad_row).json()
+    response = client.post("/v1/predict", json=bad_row)
 
     assert response.status_code == 422
