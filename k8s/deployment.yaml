@@ -33,4 +33,4 @@ spec:
             limits: {cpu: "1", memory: 512Mi}
           envFrom:
             - configMapRef: {name: churn-config}
-            - secretRef: {name: churn-secre}
+            - secretRef: {name: churn-secrets}
