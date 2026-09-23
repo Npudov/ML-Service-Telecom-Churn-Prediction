@@ -1,4 +1,3 @@
-import os
 import time
 import uuid
 from contextlib import asynccontextmanager
@@ -11,8 +10,6 @@ from pydantic import BaseModel, Field
 from churn import db
 from churn.config import settings
 
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
-MODEL_PATH = os.getenv("MODEL_PATH", "artifact/baseline_logreg.joblib")
 
 class Features(BaseModel):
     model_config = {"extra": "forbid"}
@@ -68,8 +65,8 @@ def health():
         "status": "ok", 
         "model_version": getattr(app.state, "version", "unknown"), 
         "config": {
-            "log_level": LOG_LEVEL,
-            "model_path": MODEL_PATH
+            "log_level": settings.log_level,
+            "model_path": settings.model_path
             }
         }
 
