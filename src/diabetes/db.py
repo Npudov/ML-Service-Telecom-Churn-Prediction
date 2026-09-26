@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS predictions (
     model_version       text NOT NULL,
     features        jsonb NOT NULL,
     score       double precision NOT NULL,
-    latency_ms real
+    latency_ms real,
+    status_code integer
 )
 """
 
@@ -21,14 +22,15 @@ def init() -> None:
     with psycopg.connect(settings.database_url) as conn:
         conn.execute("SELECT pg_advisory_xact_lock(8003)")
         conn.execute(DDL)
+        conn.execute("ALTER TABLE predictions ADD COLUMN IF NOT EXISTS status_code integer")
 
 
-def save_prediction(request_id : str, features : dict, score : float, model_version : str, latency_ms : float) -> None:
+def save_prediction(request_id : str, features : dict, score : float, model_version : str, latency_ms : float, status_code: int) -> None:
     if not settings.database_url:
         return
     with psycopg.connect(settings.database_url) as conn:
             conn.execute(
-            "INSERT INTO predictions (request_id, model_version, features, score, latency_ms) "
-            "VALUES (%s, %s, %s, %s, %s)",
-            (request_id, model_version, Json(features), score, latency_ms),
+            "INSERT INTO predictions (request_id, model_version, features, score, latency_ms, status_code) "
+            "VALUES (%s, %s, %s, %s, %s, %s)",
+            (request_id, model_version, Json(features), score, latency_ms, status_code),
         )

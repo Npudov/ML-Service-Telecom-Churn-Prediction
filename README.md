@@ -109,7 +109,7 @@ curl -X POST localhost:8000/v1/predict -H "Content‐Type: application/json" -d 
 
 ```bash
 docker compose exec db psql -U postgres -d diabetes \
--c "SELECT request_id, score, latency_ms FROM predictions;"
+-c "SELECT request_id, score, latency_ms, status_code FROM predictions;"
 ```
 
 ![alt text](./images/image-10.png)
@@ -164,7 +164,7 @@ kubectl rollout status deploy/diabetes‐service
 Создаем туннель с порта 8080 нашей машины до порта 80 сервиса нашего кластера
 
 ```bash
-kubectl port‐forward svc/diabetes‐service 8080:80
+kubectl port-forward svc/diabetes-service 8080:80
 ```
 ![alt text](./images/image-16.png)
 
@@ -240,7 +240,7 @@ P95 скакнул до 200 мс
 Далее осуществим выкат новой версии нашего сервера на кластер kubernetes. Поскольку мы прописали новый файл с нагрузочным тестированием, то можем собрать новый докер образ нашего сервиса. Сначала соберем новый докер образ c тегом 1.1 командой:
 
 ```bash
-docker build -t diabetes‐service:1.1 .
+docker build -t diabetes-service:1.1 .
 ```
 ![alt text](./images/image-19.png)
 
