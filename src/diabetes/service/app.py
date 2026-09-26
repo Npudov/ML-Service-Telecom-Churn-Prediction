@@ -76,7 +76,9 @@ def predict(x: Features, bg: BackgroundTasks) -> Prediction:
 
     latency_ms = round((time.perf_counter() - t0) * 1000, 2)
 
-    bg.add_task(db.save_prediction, request_id, payload, score, app.state.version, latency_ms)
+    status_code = 200
+
+    bg.add_task(db.save_prediction, request_id, payload, score, app.state.version, latency_ms, status_code)
 
     diabetes = (score >= app.state.meta["threshold"])
 
