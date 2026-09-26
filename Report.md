@@ -3,8 +3,8 @@
 
 
 ## Базовый пайплайн
-Успешный пайплайн со всеми этапами тестов, сборки, деплоя доступен по ссылке: https://github.com/Npudov/ML-Service-Telecom-Churn-Prediction/actions/runs/36231171654
-Образ сервиса с sha коммита находится в packages по ссылке: https://github.com/Npudov/ML-Service-Telecom-Churn-Prediction/pkgs/container/ml-service-telecom-churn-prediction/1297914610?tag=sha-5754a636a7badcb2081b309b062784e734d981cd
+Успешный пайплайн со всеми этапами тестов, сборки, деплоя доступен по ссылке: https://github.com/Npudov/ML-Service-Diabetes-Prediction/actions/runs/36232108895
+Образ сервиса с sha коммита находится в packages по ссылке: https://github.com/Npudov/ML-Service-Diabetes-Prediction/pkgs/container/ml-service-diabetes-prediction
 
 ## Возможные ошибки в пайплайне
 
