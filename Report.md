@@ -3,8 +3,8 @@
 
 
 ## Базовый пайплайн
-Успешный пайплайн со всеми этапами тестов, сборки, деплоя доступен по ссылке: https://github.com/Npudov/ML-Service-Telecom-Churn-Prediction/actions/runs/35922134182 
-Образ сервиса с sha коммита находится в packages по ссылке: https://github.com/Npudov/ML-Service-Telecom-Churn-Prediction/pkgs/container/ml-service-telecom-churn-prediction/1286714715?tag=sha-2f07b1325037f6dc6f480ce2b232cc9d9705e4bf
+Успешный пайплайн со всеми этапами тестов, сборки, деплоя доступен по ссылке: https://github.com/Npudov/ML-Service-Telecom-Churn-Prediction/actions/runs/36231171654
+Образ сервиса с sha коммита находится в packages по ссылке: https://github.com/Npudov/ML-Service-Telecom-Churn-Prediction/pkgs/container/ml-service-telecom-churn-prediction/1297914610?tag=sha-5754a636a7badcb2081b309b062784e734d981cd
 
 ## Возможные ошибки в пайплайне
 
