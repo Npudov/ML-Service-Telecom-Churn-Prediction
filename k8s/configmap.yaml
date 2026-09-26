@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: churn-config
+  name: diabetes-config
 data:
   LOG_LEVEL: "INFO"
   MODEL_PATH: artifact/baseline_logreg.joblib

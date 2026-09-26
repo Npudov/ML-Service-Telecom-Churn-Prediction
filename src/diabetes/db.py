@@ -1,7 +1,7 @@
 import psycopg
 from psycopg.types.json import Json
 
-from churn.config import settings
+from diabetes.config import settings
 
 DDL = """
 CREATE TABLE IF NOT EXISTS predictions (
