@@ -7,39 +7,28 @@ import pandas as pd
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from churn import db
-from churn.config import settings
+from diabetes import db
+from diabetes.config import settings
 
 
 class Features(BaseModel):
     model_config = {"extra": "forbid"}
 
     gender: str
-    SeniorCitizen: int = Field(ge=0, le=1)
-    Partner: str
-    Dependents: str
-    tenure: int = Field(ge=0, le=120)
-    PhoneService: str
-    MultipleLines: str
-    InternetService: str
-    OnlineSecurity: str
-    OnlineBackup: str
-    DeviceProtection: str
-    TechSupport: str
-    StreamingTV: str
-    StreamingMovies: str
-    Contract: str
-    PaperlessBilling: str
-    PaymentMethod: str
-    MonthlyCharges: float = Field(gt=0)
-    TotalCharges: float | None = None
+    age: int = Field(ge=0)
+    hypertension: int
+    heart_disease: int = Field(ge=0, le=300)
+    smoking_history: str
+    bmi: float
+    HbA1c_level: float = Field(ge=0.0)
+    blood_glucose_level: int
 
 
 class Prediction(BaseModel):
     #model_config = {"protected_namespaces": ()}
 
     score: float
-    churn: bool
+    diabetes: bool
     model_version: str
     request_id: str
     latency_ms: float
@@ -57,7 +46,7 @@ async def lifespan(app: FastAPI):
     app.state.pipeline = None
 
 
-app = FastAPI(title="churn-service", version="1.0", lifespan=lifespan)
+app = FastAPI(title="diabetes-service", version="1.0", lifespan=lifespan)
 
 @app.get("/health")
 def health():
@@ -72,7 +61,7 @@ def health():
 
 @app.get("/ready")
 def ready():
-    if getattr(app.state, "pipeline", "None") is None:
+    if getattr(app.state, "pipeline", None) is None:
         raise HTTPException(status_code=503, detail="Model not loaded")
     return {"status": "ready"}
 
@@ -89,11 +78,11 @@ def predict(x: Features, bg: BackgroundTasks) -> Prediction:
 
     bg.add_task(db.save_prediction, request_id, payload, score, app.state.version, latency_ms)
 
-    churn = (score >= app.state.meta["threshold"])
+    diabetes = (score >= app.state.meta["threshold"])
 
     return Prediction(
         score=score,
-        churn=churn,
+        diabetes=diabetes,
         model_version=app.state.version,
         request_id=request_id,
         latency_ms=latency_ms

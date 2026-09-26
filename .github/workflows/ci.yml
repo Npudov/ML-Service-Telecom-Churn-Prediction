@@ -10,14 +10,14 @@ jobs:
     services:
       postgres:
         image: postgres:16
-        env: {POSTGRES_PASSWORD: test, POSTGRES_DB: churn}
+        env: {POSTGRES_PASSWORD: test, POSTGRES_DB: diabetes}
         ports: ["5432:5432"]
         options: >-
           --health-cmd "pg_isready -U postgres"
           --health-interval 5s --health-timeout 3s --health-retries 10
       
     env:
-      DATABASE_URL: postgresql://postgres:test@localhost:5432/churn
+      DATABASE_URL: postgresql://postgres:test@localhost:5432/diabetes
 
 
     steps:
@@ -80,9 +80,9 @@ jobs:
         env:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
-          kubectl create secret generic churn-secrets \
+          kubectl create secret generic diabetes-secrets \
           --from-literal=POSTGRES_PASSWORD="$DB_PASSWORD" \
-          --from-literal=DATABASE_URL="postgresql://postgres:$DB_PASSWORD@postgres:5432/churn"
+          --from-literal=DATABASE_URL="postgresql://postgres:$DB_PASSWORD@postgres:5432/diabetes"
       
       - name: база
         run: |
@@ -92,12 +92,12 @@ jobs:
       - name: сервис
         run: |
           kubectl apply -f k8s/
-          kubectl set image deploy/churn-service api="$IMAGE"
-          kubectl rollout status deploy/churn-service --timeout=120s
+          kubectl set image deploy/diabetes-service api="$IMAGE"
+          kubectl rollout status deploy/diabetes-service --timeout=120s
 
       - name: smoke
         run: |
-          kubectl port-forward svc/churn-service 8080:80 &
+          kubectl port-forward svc/diabetes-service 8080:80 &
           sleep 5
 
           curl --fail -s localhost:8080/health; echo
@@ -106,7 +106,7 @@ jobs:
 
           sleep 2
 
-          kubectl exec deploy/postgres -- psql -U postgres -d churn \
+          kubectl exec deploy/postgres -- psql -U postgres -d diabetes \
             -tc "SELECT count(*) FROM predictions" | grep -q 1
 
           sleep 2
@@ -121,5 +121,5 @@ jobs:
 
         run: |
           kubectl get pods -o wide
-          kubectl describe deploy/churn-service | tail -20
-          kubectl logs deploy/churn-service --tail=30 || true
+          kubectl describe deploy/diabetes-service | tail -20
+          kubectl logs deploy/diabetes-service --tail=30 || true

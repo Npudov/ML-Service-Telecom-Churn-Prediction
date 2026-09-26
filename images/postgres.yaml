@@ -19,10 +19,10 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: churn
+              value: diabetes
             - name: POSTGRES_PASSWORD
               valueFrom:
-                secretKeyRef: {name: churn-secrets, key: POSTGRES_PASSWORD}
+                secretKeyRef: {name: diabetes-secrets, key: POSTGRES_PASSWORD}
           readinessProbe:
             exec:
               command: ["pg_isready", "-U", "postgres"]

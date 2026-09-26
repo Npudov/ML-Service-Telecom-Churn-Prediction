@@ -15,4 +15,4 @@ RUN uv sync --frozen --no-dev
 COPY artifact/ artifact/
 
 EXPOSE 8000
-CMD ["uv", "run", "--no-sync", "uvicorn", "churn.service.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "--no-sync", "uvicorn", "diabetes.service.app:app", "--host", "0.0.0.0", "--port", "8000"]

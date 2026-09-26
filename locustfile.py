@@ -2,27 +2,16 @@ from locust import HttpUser, between, task
 
 good_payload_row = {
   "gender": "Female",
-  "SeniorCitizen": 0,
-  "Partner": "Yes",
-  "Dependents": "No",
-  "tenure": 5,
-  "PhoneService": "Yes",
-  "MultipleLines": "No",
-  "InternetService": "Fiber optic",
-  "OnlineSecurity": "No",
-  "OnlineBackup": "No",
-  "DeviceProtection": "No",
-  "TechSupport": "No",
-  "StreamingTV": "Yes",
-  "StreamingMovies": "Yes",
-  "Contract": "Month-to-month",
-  "PaperlessBilling": "Yes",
-  "PaymentMethod": "Electronic check",
-  "MonthlyCharges": 89.5,
-  "TotalCharges": 445.2
+  "age": 44,
+  "hypertension": 0,
+  "heart_disease": 0,
+  "smoking_history": "never",
+  "bmi": 19.31,
+  "HbA1c_level": 6.5,
+  "blood_glucose_level": 200
 }
 
-class ChurnPredictionServiceUser(HttpUser):
+class DiabetesPredictionServiceUser(HttpUser):
 
     wait_time = between(0.3, 1.2)
 
