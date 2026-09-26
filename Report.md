@@ -4,7 +4,7 @@
 
 ## Базовый пайплайн
 Успешный пайплайн со всеми этапами тестов, сборки, деплоя доступен по ссылке: https://github.com/Npudov/ML-Service-Diabetes-Prediction/actions/runs/36232108895
-Образ сервиса с sha коммита находится в packages по ссылке: https://github.com/Npudov/ML-Service-Diabetes-Prediction/pkgs/container/ml-service-diabetes-prediction
+Образ сервиса с sha коммита находится в packages по ссылке: https://github.com/Npudov/ML-Service-Diabetes-Prediction/pkgs/container/ml-service-diabetes-prediction/1297950998?tag=sha-aaff51395e9d1b1c61826deb11360111c0f862c0
 
 ## Возможные ошибки в пайплайне
 
