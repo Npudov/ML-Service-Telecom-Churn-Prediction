@@ -33,4 +33,4 @@ spec:
             limits: {cpu: "1", memory: 512Mi}
           envFrom:
             - configMapRef: {name: diabetes-config}
-            - secretRef: {name: diabet-secrets}
+            - secretRef: {name: diabetes-secrets}
